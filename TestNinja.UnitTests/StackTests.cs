@@ -47,20 +47,50 @@ namespace TestNinja.UnitTests
             Assert.That(stack.Count, Is.EqualTo(1));
         }
 
-
         [Test]
-        public void Pop_RemoveObject_RemoveLastObject()
+        public void Pop_EmptyStack_ThrowInvalidOperationException()
         {
+            var stack = new Stack<int>();
+            Assert.That(() => stack.Pop(), Throws.InvalidOperationException);
         }
-        
-//        [Test]
-//        public void Pop_RemoveObject_RemoveLastObject()
-//        {
-//        }
 
         [Test]
-        public void Peek_ViewObject_ExpectedBehavior()
+        public void Pop_StackWithFewObjects_ReturnObjectOnTop()
         {
+            var stack = new Stack<int>();
+            stack.Push(1);
+            stack.Push(2);
+            var result = stack.Pop();
+            Assert.That(result, Is.EqualTo(2));
+        }
+
+        [Test]
+        public void Peek_EmptyStack_ThrowInvalidOperationException()
+        {
+            var stack = new Stack<int>();
+            Assert.That(() => stack.Peek(), Throws.InvalidOperationException);
+        }
+
+        [Test]
+        public void Peek_StackWithObjects_ReturnTopObject()
+        {
+            var stack = new Stack<int>();
+            stack.Push(1);
+            stack.Push(2);
+            stack.Push(3);
+            var result = stack.Peek();
+            Assert.That(result, Is.EqualTo(3));
+        }
+
+        [Test]
+        public void Peek_StackWithObjects_DoesNotRemoveTopObject()
+        {
+            var stack = new Stack<int>();
+            stack.Push(1);
+            stack.Push(2);
+            stack.Push(3);
+            stack.Peek();
+            Assert.That(stack.Count, Is.EqualTo(3));
         }
     }
 }
